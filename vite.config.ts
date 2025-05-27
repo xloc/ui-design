@@ -77,6 +77,7 @@ function generateRoutes() {
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "", // for gh-pages
   plugins: [
     vue(),
     tailwindcss(),
