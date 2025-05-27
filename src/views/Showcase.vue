@@ -7,7 +7,7 @@
       </router-link>
       <h2 class="text-lg font-semibold text-gray-900 mb-4">Components</h2>
       <nav class="space-y-1">
-        <router-link v-for="component in components" :key="component.path" :to="`/showcase/${component.path}`"
+        <router-link v-for="component in componentRoutes" :key="component.path" :to="`/showcase/${component.path}`"
           class="block px-3 py-2 rounded-md text-sm font-medium" :class="[
             $route.params.component === component.path
               ? 'bg-blue-50 text-blue-700'
@@ -26,11 +26,5 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-// This will be populated dynamically based on your components directory
-const components = ref([
-  { name: 'Example Component', path: 'example' }
-  // More components will be added here
-])
+import { componentRoutes } from '../router/routes'
 </script>
