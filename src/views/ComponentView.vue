@@ -6,11 +6,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { shallowRef, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const currentComponent = ref(null)
+const currentComponent = shallowRef(null)
 
 const loadComponent = async () => {
   const componentPath = route.params.component as string
