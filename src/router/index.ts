@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { componentRoutes } from './routes'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,6 +14,16 @@ const router = createRouter({
       name: 'showcase',
       component: () => import('../views/Showcase.vue'),
       children: [
+        {
+          path: '',
+          redirect: () => {
+            // Get the latest component by creation time
+            const latestComponent = componentRoutes.reduce((latest, current) =>
+              current.created > latest.created ? current : latest
+            )
+            return `/showcase/${latestComponent.path}`
+          }
+        },
         {
           path: ':component',
           name: 'component',

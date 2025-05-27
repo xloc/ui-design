@@ -10,13 +10,18 @@ import type { ViteDevServer } from 'vite'
 function generateRoutesContent(componentsDir: string) {
   const components = fs.readdirSync(componentsDir)
     .filter((file: string) => file.endsWith('.vue'))
-    .map((file: string) => ({
-      name: file.replace('.vue', '')
-        .split('-')
-        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' '),
-      path: file.replace('.vue', '')
-    }))
+    .map((file: string) => {
+      const stats = fs.statSync(path.join(componentsDir, file))
+      return {
+        name: file.replace('.vue', '')
+          .split('-')
+          .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' '),
+        path: file.replace('.vue', ''),
+        created: stats.birthtime.getTime()
+      }
+    })
+    .sort((a, b) => b.created - a.created) // Sort by creation time, newest first
 
   return `// This file is auto-generated. Do not edit manually.
 export const componentRoutes = ${JSON.stringify(components, null, 2)}
